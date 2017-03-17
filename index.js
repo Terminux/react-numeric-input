@@ -92,7 +92,7 @@ module.exports =
 	    _inherits(NumericInput, _Component);
 
 	    function NumericInput() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        _classCallCheck(this, NumericInput);
 
@@ -100,7 +100,7 @@ module.exports =
 	            args[_key] = arguments[_key];
 	        }
 
-	        var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(NumericInput)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+	        var _this = _possibleConstructorReturn(this, (_ref = NumericInput.__proto__ || Object.getPrototypeOf(NumericInput)).call.apply(_ref, [this].concat(args)));
 
 	        _this.state = {
 	            selectionStart: null,
@@ -192,7 +192,7 @@ module.exports =
 	    }, {
 	        key: "checkValidity",
 	        value: function checkValidity() {
-	            var valid = undefined,
+	            var valid = void 0,
 	                validationError = "";
 
 	            var supportsValidation = !!this.refs.input.checkValidity;
@@ -264,6 +264,10 @@ module.exports =
 	    }, {
 	        key: "_parse",
 	        value: function _parse(x) {
+	            if (this.props.precision > 0 && x.indexOf(".") < 0) {
+	                x = this.state.value;
+	            }
+
 	            if (typeof this.props.parse == 'function') {
 	                return parseFloat(this.props.parse(x));
 	            }
@@ -331,7 +335,7 @@ module.exports =
 	        value: function increase() {
 	            var _this3 = this;
 
-	            var _recursive = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	            var _recursive = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 	            var callback = arguments[1];
 
@@ -348,7 +352,7 @@ module.exports =
 	        value: function decrease() {
 	            var _this4 = this;
 
-	            var _recursive = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	            var _recursive = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 	            var callback = arguments[1];
 
@@ -401,22 +405,21 @@ module.exports =
 	            var state = this.state;
 	            var css = {};
 
-	            var _props = this.props;
-	            var step = _props.step;
-	            var min = _props.min;
-	            var max = _props.max;
-	            var precision = _props.precision;
-	            var parse = _props.parse;
-	            var format = _props.format;
-	            var mobile = _props.mobile;
-	            var value = _props.value;
-	            var type = _props.type;
-	            var style = _props.style;
-	            var defaultValue = _props.defaultValue;
-	            var onInvalid = _props.onInvalid;
-	            var onValid = _props.onValid;
-
-	            var rest = _objectWithoutProperties(_props, ["step", "min", "max", "precision", "parse", "format", "mobile", "value", "type", "style", "defaultValue", "onInvalid", "onValid"]);
+	            var _props = this.props,
+	                step = _props.step,
+	                min = _props.min,
+	                max = _props.max,
+	                precision = _props.precision,
+	                parse = _props.parse,
+	                format = _props.format,
+	                mobile = _props.mobile,
+	                value = _props.value,
+	                type = _props.type,
+	                style = _props.style,
+	                defaultValue = _props.defaultValue,
+	                onInvalid = _props.onInvalid,
+	                onValid = _props.onValid,
+	                rest = _objectWithoutProperties(_props, ["step", "min", "max", "precision", "parse", "format", "mobile", "value", "type", "style", "defaultValue", "onInvalid", "onValid"]);
 
 	            for (var x in NumericInput.style) {
 	                css[x] = _extends({}, NumericInput.style[x], style ? style[x] || {} : {});
@@ -854,6 +857,7 @@ module.exports =
 	};
 	NumericInput.SPEED = 50;
 	NumericInput.DELAY = 500;
+
 
 	module.exports = NumericInput;
 
